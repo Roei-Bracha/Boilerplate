@@ -1,0 +1,14 @@
+.NavBarLogin{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    button{
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+    button:hover{
+        color: white
+    }
+}
