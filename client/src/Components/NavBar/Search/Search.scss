@@ -1,0 +1,12 @@
+.SearchClass{
+    display: flex;
+    justify-items: center;
+    border-radius: 5px;
+    background-color: fade-out($color: #FFFFFF, $amount: 0.45);
+    .searchIcon{
+        margin: auto;
+    };
+}
+.SearchClass:hover , .SearchClass:focus{
+    background-color: fade-out($color: #FFFFFF, $amount: 0.35)
+}

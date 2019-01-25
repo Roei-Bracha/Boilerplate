@@ -1,8 +1,7 @@
 .NavBar{
-    background-color: yellow;
-    display: flex;
-    justify-content: space-between;
-    justify-items: center;
-    height: 60px;
     width: 100%;
+    .NavBar-Toolbar{
+        display: flex;
+        justify-content: space-between
+    }
 }
