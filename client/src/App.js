@@ -6,14 +6,12 @@ import NavBar from './Components/NavBar/NavBar';
 class App extends Component {
   render() {
     return (
-      <div className="App">
       <Router>
-        <div>
+        <div className="App">
           <NavBar/>
           <Route path="/" exact component={WelcomePage}/>
         </div>
       </Router>
-    </div>
     );
   }
 }

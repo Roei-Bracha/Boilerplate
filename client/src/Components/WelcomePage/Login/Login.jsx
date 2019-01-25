@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import './Login.scss'
+
 class Login extends Component {
+    constructor(props){
+        super(props);
+        this.state ={
+            register:false
+        }
+    }
     render () {
         return (
-            <div className="NavBarLogin">
-                <button>Login</button>
-                <button>Register</button>
+            <div>
+                Login form
             </div>
         )
     }

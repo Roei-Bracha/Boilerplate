@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
-
-class componentName extends Component {
+import Paper from '@material-ui/core/Paper';
+import './WelcomePage.scss'
+import Login from './Login/Login.jsx'
+class WelcomePage extends Component {
     render () {
         return (
-            <div>
-                welcome
+            <div className={"WelcomePage"}>
+                <Paper className={"loginPaper"}>
+                    <Login/>
+                </Paper>
             </div>
         )
     }
 }
 
-export default componentName
+export default WelcomePage
