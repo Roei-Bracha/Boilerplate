@@ -1,4 +1,4 @@
-FROM node:carbon-jessie
+FROM node:10.15.1-jessie
 WORKDIR /usr/src/app
 COPY ./ ./
 RUN npm i yarn -g
