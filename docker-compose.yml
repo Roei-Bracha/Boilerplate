@@ -1,6 +1,7 @@
 version: '3.6' #the version of the docker compose
 
 services:
+  
   client-side: #name of the service
     container_name: cliret-side # name of the container
     build: ./client/ #w here its find the docker file that tell him how to build it
@@ -10,10 +11,11 @@ services:
       - "3000:3000"
     volumes: #allow accsess to the file system of the docker container - allow live changing between the host and the container
       - ./client/:/usr/src/app # hostPath:containerPath
+  
   backend:
     container_name: backend
     build: ./server/ #w here its find the docker file that tell him how to build it
-    command: npm start # the commentd we wont it to run after the build
+    command: npm run develop # the commentd we wont it to run after the build
     working_dir: /usr/src/app #what is the working dir
     ports: # port forwording
       - "80:80"
@@ -23,6 +25,7 @@ services:
       - postgres
     environment:
       POSTGRES_URI: postgres://myUser:myPassword@postgres:5432/notesApp
+  
   postgres:
     image: postgres:11
     restart: always

@@ -4,7 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var server_1 = __importDefault(require("./server"));
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 80;
 server_1.default.listen(port, function () {
     console.log("the server is runing on port " + port);
 });
+console.log(process.env.POSTGRES_URI);
