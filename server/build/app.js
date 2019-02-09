@@ -8,4 +8,3 @@ var port = process.env.PORT || 80;
 server_1.default.listen(port, function () {
     console.log("the server is runing on port " + port);
 });
-console.log(process.env.POSTGRES_URI);
