@@ -2,6 +2,6 @@ FROM node:carbon-jessie
 WORKDIR /usr/src/app
 COPY ./ ./
 RUN npm i yarn -g
+RUN npm i nodemon -g
 RUN yarn install
-RUN yarn add nodemon 
 CMD ["/bin/bash"]
