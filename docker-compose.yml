@@ -3,7 +3,7 @@ version: '3.6' #the version of the docker compose
 services:
   
   client-side: #name of the service
-    container_name: cliret-side # name of the container
+    container_name: client-side # name of the container
     build: ./client/ #w here its find the docker file that tell him how to build it
     command: npm start # the commentd we wont it to run after the build
     working_dir: /usr/src/app #what is the working dir
@@ -27,7 +27,7 @@ services:
       POSTGRES_URI: postgres://myUser:myPassword@postgres:5432/notesApp
   
   postgres:
-    image: postgres:11
+    build: ./postgres
     restart: always
     ports:
       - "5432:5432"
