@@ -11,6 +11,9 @@ var postgressSingelton = /** @class */ (function () {
             this.singelton = new pg_1.Pool({
                 connectionString: process.env.POSTGRES_URI,
             });
+            this.singelton.on('error', function (err, client) {
+                console.error('POSTGRESS: Unexpected error on idle client', err);
+            });
         }
         return this.singelton;
     };

@@ -11,6 +11,9 @@ class postgressSingelton {
             this.singelton = new Pool({
                 connectionString: process.env.POSTGRES_URI,
             })
+            this.singelton.on('error', (err, client) => {
+                console.error('POSTGRESS: Unexpected error on idle client', err)
+            })
         }
         return this.singelton
     }
