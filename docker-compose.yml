@@ -23,8 +23,10 @@ services:
       - ./server/:/usr/src/app # hostPath:containerPath
     links:
       - postgres
+      - redis
     environment:
       POSTGRES_URI: postgres://myUser:myPassword@postgres:5432/notesApp
+      REDIS_URI: redis
   
   postgres:
     build: ./postgres
@@ -36,7 +38,10 @@ services:
       POSTGRES_PASSWORD: myPassword
       POSTGRES_DB: notesApp
       POSTGRES_HOST: postgres
-  
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
   adminer:
     image: adminer
     restart: always
