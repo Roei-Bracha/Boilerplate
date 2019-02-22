@@ -1,16 +1,16 @@
 import * as redis from "redis";
 
 class redisSingelton {
-    singelton : null | redis.RedisClient
+    _singelton : null | redis.RedisClient
     constructor() {
-        this.singelton  = null
+        this._singelton  = null
         this.getInstant = this.getInstant.bind(this);
     }
     getInstant = () : redis.RedisClient =>{
-        if(this.singelton === null){
-            this.singelton = redis.createClient(6379,process.env.REDIS_URI);
+        if(this._singelton === null){
+            this._singelton = redis.createClient(6379,process.env.REDIS_URI);
         }
-        return this.singelton
+        return this._singelton
     }
 }
 
