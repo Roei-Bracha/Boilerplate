@@ -25,7 +25,7 @@ services:
       - postgres
       - redis
     environment:
-      POSTGRES_URI: postgres://myUser:myPassword@postgres:5432/notesApp
+      POSTGRES_URI: postgres://myUser:123456@postgres:5432/db
       REDIS_URI: redis
   
   postgres:
@@ -35,8 +35,8 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: myUser
-      POSTGRES_PASSWORD: myPassword
-      POSTGRES_DB: notesApp
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db
       POSTGRES_HOST: postgres
   redis:
     image: redis
