@@ -3,7 +3,7 @@ import * as express from 'express';
 import jwt from 'jsonwebtoken';
 import redis from '../db/redis'
 import {jwtPayload , SetTokenResult} from '../interfaces/auth';
-import {gatUserByUserName , signUpUser} from '../db/pgQueries'
+import {getUserByUserName , signUpUser} from '../db/pgQueries'
 import bcrypt, {hashSync} from 'bcrypt';
 const redisClient = redis.getInstant()
 
@@ -48,7 +48,7 @@ const handleSignin = (req : express.Request, res : express.Response)=>{
         res.status(400).send("please provide user name and password")
     }
     else{
-        gatUserByUserName(userName).then((user : User | null)=>{
+        getUserByUserName(userName).then((user : User | null)=>{
             if(user===null){
                 res.sendStatus(401)
             }

@@ -2,7 +2,7 @@ import { User } from './../interfaces/auth';
 import pg from './postgress'
 const pool = pg.getInstance()
 
-export function gatUserByUserName(userName:string) : Promise<User | null>{
+export function getUserByUserName(userName:string) : Promise<User | null>{
     return new Promise((resolve,reject)=>{
         pool.query(`select * from users where user_name=($1)`,[userName]).then((data)=>{
             if(data.rowCount!==0){
