@@ -13,11 +13,10 @@ const server = new ApolloServer({ typeDefs, resolvers });
 app.use(bodyParser.json());
 
 //Routes
+app.post('/login',authCheck)
 app.get('/',(req :Request , res:Response)=>{
     res.send("hello world")
 })
-
-app.post('/login',authCheck)
 
 server.applyMiddleware({ app });
 

@@ -1,3 +1,4 @@
+-- if you change that dont forget to change the user interface in the interfaces/auth
 BEGIN TRANSACTION;
 CREATE TABLE users (
     id serial PRIMARY KEY,
