@@ -27,6 +27,7 @@ services:
     environment:
       POSTGRES_URI: postgres://myUser:123456@postgres:5432/db
       REDIS_URI: redis
+      PASSWORD_SALT: "myPasswordSalt"
   
   postgres:
     build: ./postgres

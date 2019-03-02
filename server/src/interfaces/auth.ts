@@ -16,3 +16,9 @@ export interface SetTokenResult{
     userId:string,
     token:string
 }
+
+export interface SignUpBody{
+    userName:string,
+    password:string,
+    email:string
+}

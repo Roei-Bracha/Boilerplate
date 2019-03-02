@@ -3,8 +3,8 @@ import * as express from 'express';
 import jwt from 'jsonwebtoken';
 import redis from '../db/redis'
 import {jwtPayload , SetTokenResult} from '../interfaces/auth';
-import {gatUserByUserName} from '../db/pgQueries'
-import bcrypt from 'bcrypt';
+import {gatUserByUserName , signUpUser} from '../db/pgQueries'
+import bcrypt, {hashSync} from 'bcrypt';
 const redisClient = redis.getInstant()
 
 //TODO: write test
@@ -17,14 +17,20 @@ const signToken = (username : string , email:string) :string =>{
 const setTokenInRedis  = (key : string, value : string) : Promise<Boolean> => Promise.resolve(redisClient.set(key, value));
 
 const getAuthTokenId = (res : express.Response ,authorization : string ) =>{
+    let payload = {}
+    try{
+        payload = jwt.verify(authorization,(process.env.JWT_KEY || 'JWT_KEY'))
+    }
+    catch(err){
+        return res.sendStatus(401)
+    }
     return redisClient.get(authorization , (err , reply)=>{
         if (err || !reply) {
             return res.status(401).send('Unauthorized');
         }
-        return res.json({id: reply})
+        return res.json({id: reply,...payload})
         });
     }
-
 const createSeasion = (user:User) : Promise<SetTokenResult>=>{
     return new Promise((resolve,reject)=>{
         const { email, user_name } = user;
@@ -37,36 +43,52 @@ const createSeasion = (user:User) : Promise<SetTokenResult>=>{
 
 
 const handleSignin = (req : express.Request, res : express.Response)=>{
-    const {username,password} = req.body
-    if(!username || !password){
+    const {userName,password} = req.body
+    if(!userName || !password){
         res.status(400).send("please provide user name and password")
     }
     else{
-        gatUserByUserName(username).then((user : User | null)=>{
+        gatUserByUserName(userName).then((user : User | null)=>{
             if(user===null){
                 res.sendStatus(401)
             }
             else{
-                if(bcrypt.compareSync(password, user.password_hash)){
-                    createSeasion(user).then((data)=>{
-                        res.send(data)
-                    }).catch((err)=>{
-                        console.log(err)
-                        res.sendStatus(500)
-                    })
-                }
-                else{
-                    res.sendStatus(401)
-                }
+                bcrypt.compare(password, user.password_hash).then((compareResult)=>{
+                    if(compareResult){
+                        createSeasion(user).then((data)=>{
+                            res.send(data)
+                        }).catch((err)=>{
+                            console.log(err)
+                            res.sendStatus(500)
+                        })
+                    }
+                    else{
+                        res.sendStatus(401)
+                    }
+                })
             }
+        }).catch((err)=>{
+            res.sendStatus(500)
+            console.log(err)
         })
     }
 }
 
+export function signup(req : express.Request, res : express.Response) : void{
+    const {userName,password,email} = req.body;
+    if(!userName || !password || !email){
+        res.sendStatus(400)
+    }
+    else{
+        const hashPassword = hashSync(password, process.env.PASSWORD_SALT || 1)
+        signUpUser(userName,hashPassword,email).then(()=>{
+            handleSignin(req,res)
+        }).catch((err)=>res.sendStatus(400))
+    }
+}
 
-export default function authCheck (req : express.Request, res : express.Response) : void {
+export function authCheck (req : express.Request, res : express.Response) : void {
     const { authorization } = req.headers;
-    if(!authorization) res.status(401).send("please provide authorization header")
     authorization ? getAuthTokenId(res , authorization) : handleSignin(req, res)
 }
 

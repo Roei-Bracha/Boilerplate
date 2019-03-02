@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import  { ApolloServer } from 'apollo-server-express';
 import typeDefs from './graphql/typeDefs'
 import resolvers from './graphql/resolvers'
-import authCheck from './controllers/auth'
+import {authCheck,signup} from './controllers/auth'
 //config
 const app = express ();
 const server = new ApolloServer({ typeDefs, resolvers });
@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 //Routes
 app.post('/login',authCheck)
+app.post('/signup',signup)
 app.get('/',(req :Request , res:Response)=>{
     res.send("hello world")
 })
