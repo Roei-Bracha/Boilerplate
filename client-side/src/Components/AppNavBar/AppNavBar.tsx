@@ -6,8 +6,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import {connect} from 'react-redux'
+import { store } from '../../store/configureStore';
 
-function AppNavBar(props){
+type Props = StateProps // & DispatchProps & OwnProps 
+
+function AppNavBar(props:Props){
     return (
         <AppBar className={"AppNavBar"}>
             <Toolbar className={"Toolbar"}>
@@ -20,14 +23,12 @@ function AppNavBar(props){
     )
 }
 
-const mapStateToProps = (state) => ({
+interface StateProps {
+    userId: string | null
+}
+
+const mapStateToProps = (state:store) : StateProps => ({
     userId:state.main.userId
 })
-const mapDispathcToProps ={
-}
 
 export default connect(mapStateToProps)(AppNavBar)
-
-AppNavBar.propTypes = {
-
-}

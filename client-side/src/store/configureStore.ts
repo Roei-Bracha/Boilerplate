@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import mainReducer from '../reducers/main'
+import mainReducer , {mainReducerState} from '../reducers/main'
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
@@ -11,3 +11,7 @@ export default () => {
     );
     return store;
 };
+
+export interface store {
+    main:mainReducerState
+}

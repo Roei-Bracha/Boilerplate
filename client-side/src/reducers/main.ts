@@ -1,4 +1,4 @@
-interface mainReducerState {
+export interface mainReducerState {
     userId:string |null
 }
 
